@@ -1,0 +1,10 @@
+{
+  "name": "newpagebot",
+  "version": "0.0.1",
+  "dependencies": {
+    "node-xmpp": ">=0.0.1",
+    "couch": ">=0.0.5",
+    "redis": ">=0.0.1",
+    "ntwitter": "~0.4.0"
+  }
+}
