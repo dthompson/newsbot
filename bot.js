@@ -4,9 +4,9 @@
 var util = require('util');
 var xmpp = require('node-xmpp');
 //var ps = require('./pubsub');
-var twitter = require('ntwitter');
+var ImmortalNTwitter = require('immortal-ntwitter');
 
-var twit = new twitter({
+var twit = ImmortalNTwitter.create({
   consumer_key: process.env.TWITTER_CON_KEY,
   consumer_secret: process.env.TWITTER_CON_SECRET,
   access_token_key: process.env.TWITTER_ACC_KEY,
@@ -40,7 +40,7 @@ var addUrl = function(url){
 }
 
 
-twit.stream('user', {track:'dthompson'}, function(stream) {
+twit.immortalStream('user', {track:'dthompson'}, function(stream) {
   stream.on('data', function (data) {
       if(data.entities !== undefined){
           //console.log(data.entities);
@@ -50,10 +50,19 @@ twit.stream('user', {track:'dthompson'}, function(stream) {
           }
       }
   });
+  stream.on('error', function (exp) {
+      console.log("ERROR!", exp);
+  });
+  stream.on('close', function (close) {
+      console.log("CLOSE!", close);
+  });
+
   stream.on('end', function (response) {
+      console("END?", response);
     // Handle a disconnection
   });
   stream.on('destroy', function (response) {
+      console("DESTROY?", response);
     // Handle a 'silent' disconnection from Twitter, no end/error event fired
   });
   // Disconnect stream after five seconds
